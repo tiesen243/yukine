@@ -1,0 +1,21 @@
+{
+  "name": "@yukine/infra",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./alchemy": "./alchemy.run.ts"
+  },
+  "scripts": {
+    "deploy": "alchemy deploy",
+    "destroy": "alchemy destroy",
+    "dev": "alchemy dev"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "alchemy": "catalog:dev",
+    "typescript": "catalog:dev"
+  }
+}

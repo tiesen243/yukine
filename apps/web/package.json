@@ -1,0 +1,40 @@
+{
+  "name": "@yukine/web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun run --env-file=../../.env react-router build",
+    "clean": "git clean -xdf .cache .react-router .turbo .vercel build node_modules",
+    "dev": "bun run --env-file=../../.env react-router dev",
+    "start": "bun run --env-file=../../.env react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-router/node": "^7.12.0",
+    "@react-router/serve": "^7.12.0",
+    "@tanstack/react-query": "catalog:prod",
+    "@yukine/lib": "workspace:*",
+    "@yukine/ui": "workspace:*",
+    "@yukine/validators": "workspace:*",
+    "isbot": "^5.1.32",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "react-router": "^7.12.0"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^7.12.0",
+    "@tailwindcss/vite": "catalog:tailwind",
+    "@types/node": "catalog:dev",
+    "@types/react": "catalog:react",
+    "@types/react-dom": "catalog:react",
+    "@yukine/tsconfig": "workspace:*",
+    "alchemy": "catalog:dev",
+    "tailwindcss": "catalog:tailwind",
+    "typescript": "catalog:dev",
+    "vite": "npm:rolldown-vite@^7.3.1"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@^7.3.1"
+  }
+}

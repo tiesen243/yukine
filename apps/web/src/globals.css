@@ -1,0 +1,2 @@
+@import '@yukine/ui/tailwind.css';
+@source '../../../packages/ui/dist/**/*.mjs';

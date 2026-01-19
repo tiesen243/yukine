@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/turbo/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "clean": {
+      "dependsOn": ["^clean"],
+      "cache": false
+    },
+    "deploy": {
+      "cache": false
+    },
+    "destroy": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "typecheck": {
+      "outputLogs": "new-only"
+    }
+  },
+  "globalEnv": ["CLIENT_ORIGINS", "VITE_API_URL", "PORT"],
+  "globalPassThroughEnv": [
+    "CI",
+    "NODE_ENV",
+    "SKIP_ENV_VALIDATION",
+
+    "npm_lifecycle_event"
+  ]
+}
