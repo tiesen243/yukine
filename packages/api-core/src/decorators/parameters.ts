@@ -5,7 +5,7 @@ import {
   QUERY_METADATA_KEY,
   BODY_METADATA_KEY,
   CTX_METADATA_KEY,
-} from '@/core/decorators/keys'
+} from '@/decorators/keys'
 
 const Param = (schema?: AnySchema): ParameterDecorator => {
   return (

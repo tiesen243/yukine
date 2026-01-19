@@ -1,24 +1,29 @@
 import { cors } from '@elysiajs/cors'
 import { openapi } from '@elysiajs/openapi'
-import { env } from '@yukine/validators/env'
+// import { env } from '@yukine/validators/env'
+import { Elysia } from 'elysia'
 import { CloudflareAdapter } from 'elysia/adapter/cloudflare-worker'
 
-import { createApp } from '@/core'
-import { httpException } from '@/core/plugins/http-exception'
-import { timming } from '@/core/plugins/timming'
-import { AppModule } from '@/modules/app.module'
+import { appRouter } from '@/modules/app'
+import { postRouter } from '@/modules/post'
+import { httpException } from '@/shared/plugins/http-exception'
+import { timming } from '@/shared/plugins/timming'
 
-export default createApp(AppModule, {
+export default new Elysia({
   aot: true,
   adapter: CloudflareAdapter,
-  plugins: [
+  prefix: '/api',
+})
+  .use(
     cors({
-      origin: env.CLIENT_ORIGINS,
+      // origin: env.CLIENT_ORIGINS,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       credentials: true,
     }),
-    openapi(),
-    timming({ ignorePatterns: [/^(?!\/api).*/] }),
-    httpException(),
-  ],
-}).compile()
+  )
+  .use(openapi())
+  .use(timming({ ignorePatterns: [/^(?!\/api).*/] }))
+  .use(httpException())
+  .use(appRouter)
+  .use(postRouter)
+  .compile()

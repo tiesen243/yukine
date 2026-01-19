@@ -3,7 +3,7 @@ import type {
   Metadata,
   ClassLike,
   OpenAPIProps,
-} from '@/core/types'
+} from '@/types'
 
 import {
   BODY_METADATA_KEY,
@@ -12,7 +12,7 @@ import {
   CTX_METADATA_KEY,
   CONTROLLER_METADATA_KEY,
   OPENAPI_METADATA_KEY,
-} from '@/core/decorators/keys'
+} from '@/decorators/keys'
 
 const httpMethod = (props: HttpMethodProps) => {
   const body = Reflect.getMetadata(BODY_METADATA_KEY, props.handler)

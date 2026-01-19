@@ -7,7 +7,7 @@ import { api } from '@/lib/api'
 export default function IndexPage(_: Route.ComponentProps) {
   const { data, isLoading } = useQuery({
     queryKey: ['health'],
-    queryFn: () => api.get('/'),
+    queryFn: () => api.health.get(),
   })
 
   return (

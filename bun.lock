@@ -15,11 +15,10 @@
       "version": "0.0.1",
       "dependencies": {
         "@elysiajs/cors": "^1.4.1",
+        "@elysiajs/eden": "^1.4.6",
         "@elysiajs/openapi": "^1.4.13",
         "@yukine/validators": "workspace:*",
-        "alchemy": "catalog:dev",
         "elysia": "^1.4.22",
-        "reflect-metadata": "^0.2.2",
       },
       "devDependencies": {
         "@types/bun": "^1.3.6",
@@ -32,10 +31,12 @@
       "name": "@yukine/web",
       "version": "0.0.1",
       "dependencies": {
+        "@elysiajs/eden": "^1.4.6",
         "@react-router/node": "^7.12.0",
         "@react-router/serve": "^7.12.0",
         "@tanstack/react-query": "catalog:prod",
-        "@yukine/lib": "workspace:",
+        "@yukine/api": "workspace:*",
+        "@yukine/lib": "workspace:*",
         "@yukine/ui": "workspace:*",
         "@yukine/validators": "workspace:*",
         "isbot": "^5.1.32",
@@ -54,6 +55,20 @@
         "tailwindcss": "catalog:tailwind",
         "typescript": "catalog:dev",
         "vite": "npm:rolldown-vite@^7.3.1",
+      },
+    },
+    "packages/api-core": {
+      "name": "@yukine/api-core",
+      "version": "1.0.0",
+      "dependencies": {
+        "elysia": "^1.4.22",
+        "reflect-metadata": "^0.2.2",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:dev",
+        "@yukine/tsconfig": "workspace:*",
+        "tsdown": "catalog:dev",
+        "typescript": "catalog:dev",
       },
     },
     "packages/lib": {
@@ -305,6 +320,8 @@
     "@cspotcode/source-map-support": ["@cspotcode/source-map-support@0.8.1", "", { "dependencies": { "@jridgewell/trace-mapping": "0.3.9" } }, "sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw=="],
 
     "@elysiajs/cors": ["@elysiajs/cors@1.4.1", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-lQfad+F3r4mNwsxRKbXyJB8Jg43oAOXjRwn7sKUL6bcOW3KjUqUimTS+woNpO97efpzjtDE0tEjGk9DTw8lqTQ=="],
+
+    "@elysiajs/eden": ["@elysiajs/eden@1.4.6", "", { "peerDependencies": { "elysia": ">=1.4.19" } }, "sha512-Tsa4NwXEWg/u73vWiYZQ3L5/ecgZSxqiEjYwpS+4qBKXeTZqZKl2hcgHJSVBL+InEDMi35Xugct7qyAXE5oM4Q=="],
 
     "@elysiajs/openapi": ["@elysiajs/openapi@1.4.13", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-5BNI7yuFo8zjacTWA8a/wYE0tNZ4ecD7PAkeUDEU7lj6Iep0t2i5Rml6q4/+roM5oZFdtvvzoX4DH8zGKFEo0w=="],
 
@@ -691,6 +708,8 @@
     "@types/react-dom": ["@types/react-dom@19.2.3", "", { "peerDependencies": { "@types/react": "^19.2.0" } }, "sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ=="],
 
     "@yukine/api": ["@yukine/api@workspace:apps/api"],
+
+    "@yukine/api-core": ["@yukine/api-core@workspace:packages/api-core"],
 
     "@yukine/infra": ["@yukine/infra@workspace:tools/infra"],
 

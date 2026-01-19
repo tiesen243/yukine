@@ -1,13 +1,13 @@
-import type { ModuleProps, ClassLike, Metadata } from '@/core/types'
+import type { ModuleProps, ClassLike, Metadata } from '@/types'
 import type { Elysia, Context } from 'elysia'
 
-import { container } from '@/core/container'
+import { container } from '@/container'
 import {
   IMPORTS_METADATA_KEY,
   CONTROLLER_METADATA_KEY,
   INJECTABLE_METADATA_KEY,
   INITIALIZED_CONTROLLERS_KEY,
-} from '@/core/decorators/keys'
+} from '@/decorators/keys'
 
 const Module = ({ imports = [], controllers, services }: ModuleProps) => {
   return (target: ClassLike) => {

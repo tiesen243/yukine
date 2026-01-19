@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import type { ClassLike } from '@/core/types'
+import type { ClassLike } from '@/types'
 import type { AnyElysia, ElysiaConfig } from 'elysia'
 
 import { Elysia } from 'elysia'
@@ -9,7 +9,7 @@ import {
   getControllers,
   getImports,
   getInitializedControllers,
-} from '@/core/decorators'
+} from '@/decorators'
 
 export const createApp = <T extends string>(
   module: ClassLike,

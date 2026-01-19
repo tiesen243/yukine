@@ -1,4 +1,4 @@
-import type { ClassLike } from '@/core/types'
+import type { ClassLike } from '@/types'
 import type { Elysia } from 'elysia'
 
 export const IMPORTS_METADATA_KEY = Symbol('metadata:imports')

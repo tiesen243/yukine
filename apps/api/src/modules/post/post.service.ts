@@ -1,8 +1,5 @@
-import { Injectable } from '@/core/decorators'
-
-@Injectable()
 export class PostService {
-  static numberOfPosts = 2
+  private static counter = 2
 
   private posts = [
     { id: 1, title: 'First Post', content: 'This is the first post.' },
@@ -14,23 +11,29 @@ export class PostService {
   }
 
   find(id: number) {
-    return this.posts.find((post) => post.id === id)
+    return this.posts.find((post) => post.id === id) ?? null
   }
 
   create(title: string, content: string) {
-    const id = ++PostService.numberOfPosts
-    const newPost = { id, title, content }
+    const newPost = { id: ++PostService.counter, title, content }
     this.posts.push(newPost)
     return newPost
   }
 
+  update(id: number, title: string, content: string) {
+    // oxlint-disable-next-line no-array-callback-reference
+    const post = this.find(id)
+    if (!post) return null
+
+    post.title = title
+    post.content = content
+    this.posts = this.posts.map((p) => (p.id === id ? post : p))
+    return post
+  }
+
   delete(id: number) {
     const index = this.posts.findIndex((post) => post.id === id)
-    if (index !== -1) {
-      const deletedPost = this.posts.splice(index, 1)[0]
-      return deletedPost
-    }
-
+    if (index !== -1) return this.posts.splice(index, 1)[0] ?? null
     return null
   }
 }
