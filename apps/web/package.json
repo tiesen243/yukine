@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "bun run --env-file=../../.env react-router build",
-    "clean": "git clean -xdf .cache .react-router .turbo .vercel build node_modules",
+    "clean": "git clean -xdf .alchemy .cache .react-router .turbo .vercel build node_modules",
     "dev": "bun run --env-file=../../.env react-router dev",
     "start": "bun run --env-file=../../.env react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc --noEmit"
@@ -31,7 +31,6 @@
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
     "@yukine/tsconfig": "workspace:*",
-    "alchemy": "catalog:dev",
     "tailwindcss": "catalog:tailwind",
     "typescript": "catalog:dev",
     "vite": "npm:rolldown-vite@^7.3.1"

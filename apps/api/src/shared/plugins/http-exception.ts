@@ -1,10 +1,8 @@
 import { Elysia } from 'elysia'
 
-import { HttpException } from '@/shared/http'
-
 export const httpException = () =>
   new Elysia({ name: 'plugin.http-exception' })
-    .onError(({ error, code }) => {
+    .onError(({ error, code, status }) => {
       if (code === 'VALIDATION')
         return {
           statu: 422,
@@ -12,12 +10,10 @@ export const httpException = () =>
           details: JSON.parse(error.message).errors,
         }
 
-      if (error instanceof HttpException)
-        return {
-          status: error.status,
-          error: error.message,
-          details: error.details,
-        }
+      if (code === 'UNKNOWN' && error.name.includes('FiberFailure')) {
+        const parsed = JSON.parse(error.message)
+        return status(parsed.status, parsed)
+      }
 
       return error
     })

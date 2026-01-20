@@ -1,9 +1,15 @@
-// oxlint-disable-next-line triple-slash-reference
-/// <reference path="../env.d.ts" />
+/// <reference types="../env.d.ts" />
 
 import { createEnv } from '@yukine/lib/create-env'
-import { env as cfEnv } from 'cloudflare:workers'
 import * as z from 'zod/mini'
+
+let baseEnv: Record<string, unknown>
+try {
+  const { env } = await import('cloudflare:workers')
+  baseEnv = env
+} catch {
+  baseEnv = process.env
+}
 
 export const env = createEnv({
   shared: {
@@ -23,7 +29,7 @@ export const env = createEnv({
   clientPrefix: 'VITE_',
   client: {},
 
-  runtimeEnv: cfEnv,
+  runtimeEnv: baseEnv,
 
   emptyStringAsUndefined: true,
   skipValidation: true,

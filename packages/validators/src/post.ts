@@ -2,25 +2,39 @@ import * as z from 'zod'
 
 const numeric = z.string().regex(/^\d+$/)
 
-export const post = z.object({
-  id: numeric,
-  title: z.string().min(1).max(200),
-  content: z.string().min(1),
-  publishedAt: z.string().optional(),
-})
-export type Post = z.infer<typeof post>
+export const allPostsDto = {
+  query: z.object({
+    page: z.union([numeric, z.number()]).default(1),
+    limit: z.union([numeric, z.number()]).default(10),
+  }),
+}
+export type AllPostsDto = {
+  [K in keyof typeof allPostsDto]: z.infer<(typeof allPostsDto)[K]>
+}
 
-export const allPosts = z.array(post)
-export type AllPosts = z.infer<typeof allPosts>
+export const onePostDto = {
+  params: z.object({
+    id: z.string(),
+  }),
+}
+export type OnePostDto = {
+  [K in keyof typeof onePostDto]: z.infer<(typeof onePostDto)[K]>
+}
 
-export const createPost = z.object({
-  title: z.string().min(1).max(200),
-  content: z.string().min(1),
-})
-export type CreatePost = z.infer<typeof createPost>
+export const createPostDto = {
+  body: z.object({
+    title: z.string().min(1),
+    content: z.string().min(1),
+  }),
+}
+export type CreatePostDto = {
+  [K in keyof typeof createPostDto]: z.infer<(typeof createPostDto)[K]>
+}
 
-export const updatePost = createPost.extend({ id: numeric })
-export type UpdatePost = z.infer<typeof updatePost>
-
-export const deletePost = z.object({ id: numeric })
-export type DeletePost = z.infer<typeof deletePost>
+export const updatePostDto = {
+  params: onePostDto.params,
+  body: createPostDto.body,
+}
+export type UpdatePostDto = {
+  [K in keyof typeof updatePostDto]: z.infer<(typeof updatePostDto)[K]>
+}

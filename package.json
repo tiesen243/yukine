@@ -9,15 +9,18 @@
   "scripts": {
     "build": "turbo run build",
     "clean:workspaces": "turbo run clean && git clean -xdf node_modules",
-    "deploy": "turbo run deploy -F @yukine/infra",
-    "destroy": "turbo run destroy -F @yukine/infra",
-    "dev": "turbo dev --continue",
+    "dev": "turbo dev --continue -F !@yukine/infra",
     "format": "oxfmt --check",
+    "format:fix": "oxfmt --write",
+    "infra:deploy": "turbo run deploy -F @yukine/infra",
+    "infra:destroy": "turbo run destroy -F @yukine/infra",
+    "infra:dev": "turbo dev --continue -F @yukine/infra",
     "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "oxfmt": "^0.25.0",
+    "oxfmt": "^0.26.0",
     "oxlint": "^1.40.0",
     "turbo": "^2.7.5"
   },

@@ -2,7 +2,7 @@ import { env } from '@yukine/validators/env.vite'
 
 export function getApiUrl() {
   if (import.meta.env.PROD) return env.VITE_API_URL
-  return 'http://localhost:1337'
+  return 'http://localhost:3000'
 }
 
 export function getBaseUrl(): string {
