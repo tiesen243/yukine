@@ -7,6 +7,7 @@
     "./alchemy": "./alchemy.run.ts"
   },
   "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "deploy": "alchemy deploy",
     "destroy": "alchemy destroy",
     "dev": "alchemy dev"

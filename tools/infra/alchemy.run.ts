@@ -2,7 +2,7 @@ import alchemy from 'alchemy'
 import { ReactRouter, Worker } from 'alchemy/cloudflare'
 import { config } from 'dotenv'
 
-config({ path: './.env' })
+config({ path: './.env', quiet: true })
 
 const app = await alchemy('yukine')
 
