@@ -1,4 +1,4 @@
-import type { DatabaseInfra } from '@/contracts/infras/database.infra'
+import type { DatabaseInfra } from '@/shared/infras/database.infra'
 import type { Effect } from 'effect'
 
 import { Context } from 'effect'

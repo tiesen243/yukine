@@ -1,8 +1,8 @@
-import type { DatabaseInfra } from '@/contracts/infras/database.infra'
 import type {
   IPost,
   PostRepository,
 } from '@/contracts/repositories/post.repository'
+import type { DatabaseInfra } from '@/shared/infras/database.infra'
 
 import { Context, Data, Effect } from 'effect'
 
