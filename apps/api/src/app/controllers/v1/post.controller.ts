@@ -59,16 +59,19 @@ export const postController = controller({
   .put(
     '/:id',
     ({ params, body, runtime }) =>
-      runtime.runPromise(
-        Effect.gen(function* () {
-          const postService = yield* PostService
-          const updatedPost = yield* postService.update(
-            params.id,
-            body.title,
-            body.content,
-          )
-          return updatedPost
-        }),
+      Effect.gen(function* () {
+        const postService = yield* PostService
+        const updatedPost = yield* postService.update(
+          params.id,
+          body.title,
+          body.content,
+        )
+        return updatedPost
+      }).pipe(
+        Effect.catchTag('PostNotFoundError', () =>
+          Effect.fail({ status: 404, error: 'Post not found' }),
+        ),
+        runtime.runPromise,
       ),
     updatePostDto,
   )
@@ -76,12 +79,15 @@ export const postController = controller({
   .delete(
     '/:id',
     ({ params, runtime }) =>
-      runtime.runPromise(
-        Effect.gen(function* () {
-          const postService = yield* PostService
-          yield* postService.delete(params.id)
-          return { success: true }
-        }),
+      Effect.gen(function* () {
+        const postService = yield* PostService
+        yield* postService.delete(params.id)
+        return { success: true }
+      }).pipe(
+        Effect.catchTag('PostNotFoundError', () =>
+          Effect.fail({ status: 404, error: 'Post not found' }),
+        ),
+        runtime.runPromise,
       ),
     onePostDto,
   )
