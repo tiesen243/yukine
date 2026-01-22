@@ -17,7 +17,11 @@ export class PostService extends Context.Tag('@yukine/post-service')<
   {
     all: (
       query: AllPostsDto['query'],
-    ) => Effect.Effect<IPost[], DatabaseError, PostRepository | DatabaseInfra>
+    ) => Effect.Effect<
+      { posts: IPost[]; page: number; totalPages: number; limit: number },
+      DatabaseError,
+      PostRepository | DatabaseInfra
+    >
 
     findOne: (
       id: IPost['id'],

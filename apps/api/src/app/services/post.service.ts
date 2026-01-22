@@ -17,7 +17,11 @@ export const PostServiceLive = Layer.succeed(
         const postRepo = yield* PostRepository
 
         const posts = yield* postRepo.all(query)
-        return posts
+        const totalPosts = yield* postRepo.count()
+
+        const totalPages = Math.ceil(totalPosts / query.limit)
+
+        return { posts, page: query.page, totalPages, limit: query.limit }
       }),
 
     findOne: (id) =>

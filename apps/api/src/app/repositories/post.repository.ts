@@ -20,6 +20,13 @@ export const PostRepositoryLive = Layer.succeed(
         return postList
       }),
 
+    count: () =>
+      Effect.gen(function* () {
+        const { runQuery } = yield* DatabaseInfra
+
+        return yield* runQuery((client) => client.$count(posts))
+      }),
+
     findOne: (id) =>
       Effect.gen(function* () {
         const { runQuery } = yield* DatabaseInfra

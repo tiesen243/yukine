@@ -19,18 +19,32 @@ import {
 import { useForm } from '@yukine/ui/hooks/use-form'
 import { XIcon } from '@yukine/ui/icons'
 import { Input } from '@yukine/ui/input'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@yukine/ui/pagination'
 import { Textarea } from '@yukine/ui/textarea'
 import { toast } from '@yukine/ui/toast'
 import { createPostDto } from '@yukine/validators/post'
 import { parseAsInteger, useQueryStates } from 'nuqs'
+import { useMemo } from 'react'
 
 import { api } from '@/lib/api'
 
 export default function PostPage() {
-  const [query] = useQueryStates({
+  const [query, setQuery] = useQueryStates({
     page: parseAsInteger.withDefault(1),
-    limit: parseAsInteger.withDefault(10),
+    limit: parseAsInteger.withDefault(12),
   })
+
+  const handlePageChange = (newPage: number) => {
+    setQuery({ page: newPage })
+  }
 
   return (
     <main className='container py-4'>
@@ -42,6 +56,8 @@ export default function PostPage() {
         <h2 className='sr-only'>Posts List</h2>
         <PostList query={query} />
       </section>
+
+      <PostPagination query={query} onPageChange={handlePageChange} />
     </main>
   )
 }
@@ -119,7 +135,7 @@ const PostList: React.FC<{ query: { page: number; limit: number } }> = ({
   query,
 }) => {
   const { data, error, isLoading } = useQuery({
-    queryKey: ['posts'],
+    queryKey: ['posts', query],
     queryFn: async () => {
       const { data, error } = await api.v1.posts.get({ query })
       if (error) throw new Error(error.value.message)
@@ -134,7 +150,7 @@ const PostList: React.FC<{ query: { page: number; limit: number } }> = ({
 
   if (error) return <p>Error: {error.message}</p>
 
-  return data?.map((post) => (
+  return data?.posts.map((post) => (
     <PostCard
       key={post.id}
       id={post.id}
@@ -198,3 +214,93 @@ const PostCardSkeleton: React.FC = () => (
     </CardHeader>
   </Card>
 )
+
+const PostPagination: React.FC<{
+  query: { page: number; limit: number }
+  onPageChange: (newPage: number) => void
+}> = ({ query, onPageChange }) => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['posts', query],
+    queryFn: async () => {
+      const { data, error } = await api.v1.posts.get({ query })
+      if (error) throw new Error(error.value.message)
+      return data
+    },
+  })
+
+  const paginationRange = useMemo(
+    () => getPaginationRange(data?.totalPages ?? 0, query.page),
+    [data?.totalPages, query.page],
+  )
+
+  if (isLoading || error || !data) return null
+
+  return (
+    <Pagination className='mt-4'>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={() => {
+              if (query.page <= 1) return
+              onPageChange(query.page - 1)
+            }}
+          />
+        </PaginationItem>
+
+        {paginationRange.map((page, index) =>
+          page === '...' ? (
+            <PaginationItem key={`ellipsis-${index}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem
+              key={page}
+              onClick={() => onPageChange(Number(page))}
+            >
+              <PaginationLink isActive={query.page === page}>
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          ),
+        )}
+
+        <PaginationItem>
+          <PaginationNext
+            onClick={() => {
+              if (query.page >= data.totalPages) return
+              onPageChange(query.page + 1)
+            }}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  )
+}
+
+const getPaginationRange = (totalPages: number, currentPage: number) => {
+  if (totalPages <= 7)
+    return Array.from({ length: totalPages }, (_, i) => i + 1)
+
+  if (currentPage <= 4) return [1, 2, 3, 4, 5, '...', totalPages]
+
+  if (currentPage >= totalPages - 3)
+    return [
+      1,
+      '...',
+      totalPages - 4,
+      totalPages - 3,
+      totalPages - 2,
+      totalPages - 1,
+      totalPages,
+    ]
+
+  return [
+    1,
+    '...',
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    '...',
+    totalPages,
+  ]
+}

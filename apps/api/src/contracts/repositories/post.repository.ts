@@ -17,6 +17,8 @@ export class PostRepository extends Context.Tag('@yukine/post-repository')<
       query: AllPostsDto['query'],
     ) => Effect.Effect<IPost[], DatabaseError, DatabaseInfra>
 
+    count: () => Effect.Effect<number, DatabaseError, DatabaseInfra>
+
     findOne: (
       id: IPost['id'],
     ) => Effect.Effect<IPost | null, DatabaseError, DatabaseInfra>
