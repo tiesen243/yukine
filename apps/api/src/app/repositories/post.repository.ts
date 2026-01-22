@@ -8,11 +8,13 @@ import { DatabaseInfra } from '@/shared/infras/database.infra'
 export const PostRepositoryLive = Layer.succeed(
   PostRepository,
   PostRepository.of({
-    all: () =>
+    all: ({ page = 1, limit = 10 }) =>
       Effect.gen(function* () {
         const { runQuery } = yield* DatabaseInfra
+        const offset = (page - 1) * limit
+
         const postList = yield* runQuery((client) =>
-          client.select().from(posts),
+          client.select().from(posts).limit(limit).offset(offset),
         )
 
         return postList

@@ -16,12 +16,12 @@ export const postController = controller({
 })
   .get(
     '/',
-    ({ runtime }) =>
+    ({ query, runtime }) =>
       runtime.runPromise(
         Effect.gen(function* () {
           const postService = yield* PostService
 
-          const posts = yield* postService.all()
+          const posts = yield* postService.all(query)
           return posts
         }),
       ),

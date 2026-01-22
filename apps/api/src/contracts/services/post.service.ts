@@ -8,17 +8,16 @@ import type {
   DatabaseError,
   DatabaseInfra,
 } from '@/shared/infras/database.infra'
+import type { AllPostsDto } from '@yukine/validators/post'
 
 import { Context, Data, Effect } from 'effect'
 
 export class PostService extends Context.Tag('@yukine/post-service')<
   PostService,
   {
-    all: () => Effect.Effect<
-      IPost[],
-      DatabaseError,
-      PostRepository | DatabaseInfra
-    >
+    all: (
+      query: AllPostsDto['query'],
+    ) => Effect.Effect<IPost[], DatabaseError, PostRepository | DatabaseInfra>
 
     findOne: (
       id: IPost['id'],

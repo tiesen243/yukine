@@ -1,6 +1,7 @@
 import type { Route } from './+types/_index'
 
 import { useQuery } from '@tanstack/react-query'
+import { Typography } from '@yukine/ui/typography'
 
 import { api } from '@/lib/api'
 
@@ -12,7 +13,7 @@ export default function IndexPage(_: Route.ComponentProps) {
 
   return (
     <main className='container py-8'>
-      <h1 className='text-3xl font-bold'>Hello, React Router!</h1>
+      <Typography variant='h1'>Yukine</Typography>
 
       {isLoading ? (
         <p>Loading...</p>

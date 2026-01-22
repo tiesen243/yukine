@@ -20,6 +20,7 @@
     "@yukine/ui": "workspace:*",
     "@yukine/validators": "workspace:*",
     "isbot": "^5.1.32",
+    "nuqs": "^2.8.6",
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "react-router": "^7.12.0"

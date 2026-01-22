@@ -12,11 +12,11 @@ import {
 export const PostServiceLive = Layer.succeed(
   PostService,
   PostService.of({
-    all: () =>
+    all: (query) =>
       Effect.gen(function* () {
         const postRepo = yield* PostRepository
 
-        const posts = yield* postRepo.all()
+        const posts = yield* postRepo.all(query)
         return posts
       }),
 

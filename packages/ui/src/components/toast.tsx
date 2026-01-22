@@ -91,10 +91,10 @@ function Toaster({
               toast={toast}
               className={cn(
                 'group/toast absolute z-[calc(9999-var(--toast-index))] h-(--toast-calc-height) w-full rounded-lg border bg-popover text-popover-foreground shadow-lg/5 select-none',
-                'data-[type=success]:border-green-600 data-[type=success]:bg-green-100 data-[type=success]:text-green-600 dark:data-[type=success]:border-green-400 dark:data-[type=success]:bg-green-950 dark:data-[type=success]:text-green-400',
-                'data-[type=error]:border-red-600 data-[type=error]:bg-red-100 data-[type=error]:text-red-600 dark:data-[type=error]:border-red-400 dark:data-[type=error]:bg-red-950 dark:data-[type=error]:text-red-400',
-                'data-[type=info]:border-blue-600 data-[type=info]:bg-blue-100 data-[type=info]:text-blue-600 dark:data-[type=info]:border-blue-400 dark:data-[type=info]:bg-blue-950 dark:data-[type=info]:text-blue-400',
-                'data-[type=warning]:border-yellow-600 data-[type=warning]:bg-yellow-100 data-[type=warning]:text-yellow-600 dark:data-[type=warning]:border-yellow-400 dark:data-[type=warning]:bg-yellow-950 dark:data-[type=warning]:text-yellow-400',
+                'data-[type=success]:border-green-600 data-[type=success]:text-green-600 dark:data-[type=success]:border-green-400 dark:data-[type=success]:text-green-400',
+                'data-[type=error]:border-red-600 data-[type=error]:text-red-600 dark:data-[type=error]:border-red-400 dark:data-[type=error]:text-red-400',
+                'data-[type=info]:border-blue-600 data-[type=info]:text-blue-600 dark:data-[type=info]:border-blue-400 dark:data-[type=info]:text-blue-400',
+                'data-[type=warning]:border-yellow-600 data-[type=warning]:text-yellow-600 dark:data-[type=warning]:border-yellow-400 dark:data-[type=warning]:text-yellow-400',
                 '[transition:transform_.5s_cubic-bezier(.22,1,.36,1),opacity_.5s,height_.15s]',
                 'before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/6%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
                 // Base positioning using data-position

@@ -7,7 +7,7 @@ export const httpException = () =>
         return {
           statu: 422,
           error: 'Validation Error',
-          details: JSON.parse(error.message).errors,
+          details: error.valueError,
         }
 
       if (code === 'UNKNOWN' && error.name.includes('FiberFailure')) {

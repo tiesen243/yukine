@@ -1,3 +1,5 @@
+import { mergeProps } from '@base-ui/react/merge-props'
+import { useRender } from '@base-ui/react/use-render'
 import * as React from 'react'
 
 import { cn } from '@/utils'
@@ -5,19 +7,26 @@ import { cn } from '@/utils'
 function Card({
   className,
   size = 'default',
+  render,
   ...props
-}: React.ComponentProps<'div'> & { size?: 'default' | 'sm' }) {
-  return (
-    <div
-      data-slot='card'
-      data-size={size}
-      className={cn(
-        'group/card flex flex-col gap-6 overflow-hidden rounded-xl bg-card py-6 text-sm text-card-foreground shadow-xs ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl',
-        className,
-      )}
-      {...props}
-    />
-  )
+}: useRender.ComponentProps<'div'> & { size?: 'default' | 'sm' }) {
+  return useRender({
+    defaultTagName: 'div',
+    props: mergeProps<'div'>(
+      {
+        className: cn(
+          'group/card flex flex-col gap-6 overflow-hidden rounded-xl bg-card py-6 text-sm text-card-foreground shadow-xs ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl',
+          className,
+        ),
+      },
+      props,
+    ),
+    render,
+    state: {
+      slot: 'card',
+      size,
+    },
+  })
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
