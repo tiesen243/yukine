@@ -1,10 +1,14 @@
 import alchemy from 'alchemy'
-import { ReactRouter, Worker } from 'alchemy/cloudflare'
+import { ReactRouter, Worker, D1Database } from 'alchemy/cloudflare'
 import { config } from 'dotenv'
 
 config({ path: './.env', quiet: true })
 
 const app = await alchemy('yukine')
+
+export const database = await D1Database('db', {
+  migrationsDir: '../../apps/api/migrations',
+})
 
 export const web = await ReactRouter('web', {
   cwd: '../../apps/web',
@@ -20,6 +24,7 @@ export const api = await Worker('api', {
   compatibilityFlags: ['nodejs_compat', 'nodejs_compat_populate_process_env'],
   bindings: {
     CLIENT_ORIGINS: alchemy.env.CLIENT_ORIGINS ?? 'http://localhost:5173',
+    DB: database,
   },
 })
 

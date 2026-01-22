@@ -1,6 +1,9 @@
 import * as z from 'zod'
 
-const numeric = z.string().regex(/^\d+$/)
+const numeric = z
+  .string()
+  .regex(/^\d+$/)
+  .transform((val) => parseInt(val, 10))
 
 export const allPostsDto = {
   query: z.object({
@@ -13,9 +16,7 @@ export type AllPostsDto = {
 }
 
 export const onePostDto = {
-  params: z.object({
-    id: z.string(),
-  }),
+  params: z.object({ id: numeric }),
 }
 export type OnePostDto = {
   [K in keyof typeof onePostDto]: z.infer<(typeof onePostDto)[K]>

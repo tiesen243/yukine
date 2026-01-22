@@ -1,32 +1,33 @@
-import type { DatabaseInfra } from '@/shared/infras/database.infra'
+import type { posts } from '@/app/entities/post.entity'
+import type {
+  DatabaseError,
+  DatabaseInfra,
+} from '@/shared/infras/database.infra'
 import type { Effect } from 'effect'
 
 import { Context } from 'effect'
 
-export interface IPost {
-  id: string
-  title: string
-  content: string
-}
+export type IPost = (typeof posts)['$inferSelect']
 
 export class PostRepository extends Context.Tag('@yukine/post-repository')<
   PostRepository,
   {
-    all: () => Effect.Effect<IPost[], never, DatabaseInfra>
+    all: () => Effect.Effect<IPost[], DatabaseError, DatabaseInfra>
 
-    findOne: (id: string) => Effect.Effect<IPost | null, never, DatabaseInfra>
+    findOne: (
+      id: IPost['id'],
+    ) => Effect.Effect<IPost | null, DatabaseError, DatabaseInfra>
 
     create: (
-      title: string,
-      content: string,
-    ) => Effect.Effect<IPost, never, DatabaseInfra>
+      data: Pick<IPost, 'title' | 'content'>,
+    ) => Effect.Effect<IPost['id'] | null, DatabaseError, DatabaseInfra>
 
     update: (
-      id: string,
-      title: string,
-      content: string,
-    ) => Effect.Effect<IPost, never, DatabaseInfra>
+      data: Omit<IPost, 'createdAt'>,
+    ) => Effect.Effect<IPost['id'] | null, DatabaseError, DatabaseInfra>
 
-    delete: (id: string) => Effect.Effect<string, never, DatabaseInfra>
+    delete: (
+      id: IPost['id'],
+    ) => Effect.Effect<IPost['id'] | null, DatabaseError, DatabaseInfra>
   }
 >() {}

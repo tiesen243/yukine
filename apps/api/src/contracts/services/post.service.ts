@@ -1,44 +1,69 @@
+// oxlint-disable max-classes-per-file
+
 import type {
   IPost,
   PostRepository,
 } from '@/contracts/repositories/post.repository'
-import type { DatabaseInfra } from '@/shared/infras/database.infra'
+import type {
+  DatabaseError,
+  DatabaseInfra,
+} from '@/shared/infras/database.infra'
 
 import { Context, Data, Effect } from 'effect'
 
 export class PostService extends Context.Tag('@yukine/post-service')<
   PostService,
   {
-    all: () => Effect.Effect<IPost[], never, PostRepository | DatabaseInfra>
+    all: () => Effect.Effect<
+      IPost[],
+      DatabaseError,
+      PostRepository | DatabaseInfra
+    >
 
     findOne: (
-      id: string,
+      id: IPost['id'],
     ) => Effect.Effect<
-      IPost | null,
-      PostNotFoundError,
+      IPost,
+      DatabaseError | PostNotFoundError,
       PostRepository | DatabaseInfra
     >
 
     create: (
-      title: string,
-      content: string,
-    ) => Effect.Effect<IPost, never, PostRepository | DatabaseInfra>
+      data: Pick<IPost, 'title' | 'content'>,
+    ) => Effect.Effect<
+      IPost['id'],
+      DatabaseError | PostCreationError,
+      PostRepository | DatabaseInfra
+    >
 
     update: (
-      id: string,
-      title: string,
-      content: string,
-    ) => Effect.Effect<IPost, PostNotFoundError, PostRepository | DatabaseInfra>
+      data: Omit<IPost, 'createdAt'>,
+    ) => Effect.Effect<
+      IPost['id'],
+      DatabaseError | PostNotFoundError | PostUpdationError,
+      PostRepository | DatabaseInfra
+    >
 
     delete: (
-      id: string,
+      id: IPost['id'],
     ) => Effect.Effect<
-      string,
-      PostNotFoundError,
+      IPost['id'],
+      DatabaseError | PostNotFoundError | PostDeletionError,
       PostRepository | DatabaseInfra
     >
   }
 >() {}
 
-// oxlint-disable-next-line max-classes-per-file
-export class PostNotFoundError extends Data.TaggedError('PostNotFoundError') {}
+export class PostNotFoundError extends Data.TaggedError('PostNotFoundError') {
+  status = 404
+}
+export class PostCreationError extends Data.TaggedError('PostCreationError') {
+  status = 500
+}
+
+export class PostUpdationError extends Data.TaggedError('PostUpdateError') {
+  status = 500
+}
+export class PostDeletionError extends Data.TaggedError('PostDeletionError') {
+  status = 500
+}

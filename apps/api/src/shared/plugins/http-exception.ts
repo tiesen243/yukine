@@ -12,7 +12,7 @@ export const httpException = () =>
 
       if (code === 'UNKNOWN' && error.name.includes('FiberFailure')) {
         const parsed = JSON.parse(error.message)
-        return status(parsed.status, parsed)
+        return status(parsed.status ?? 500, parsed)
       }
 
       return error

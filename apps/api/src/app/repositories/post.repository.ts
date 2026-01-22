@@ -1,81 +1,68 @@
-import type { IPost } from '@/contracts/repositories/post.repository'
-
+import { eq } from 'drizzle-orm'
 import { Effect, Layer } from 'effect'
 
+import { posts } from '@/app/entities/post.entity'
 import { PostRepository } from '@/contracts/repositories/post.repository'
 import { DatabaseInfra } from '@/shared/infras/database.infra'
-
-const posts: IPost[] = [
-  {
-    id: '1',
-    title: 'First Post',
-    content: 'This is the content of the first post.',
-  },
-]
 
 export const PostRepositoryLive = Layer.succeed(
   PostRepository,
   PostRepository.of({
     all: () =>
       Effect.gen(function* () {
-        const { db } = yield* DatabaseInfra
-        db.query('SELECT * FROM posts')
-        return posts
+        const { runQuery } = yield* DatabaseInfra
+        const postList = yield* runQuery((client) =>
+          client.select().from(posts),
+        )
+
+        return postList
       }),
 
-    findOne: (id: string) =>
+    findOne: (id) =>
       Effect.gen(function* () {
-        const { db } = yield* DatabaseInfra
-        db.query('SELECT * FROM posts WHERE id = ?', [id])
+        const { runQuery } = yield* DatabaseInfra
+        const [post] = yield* runQuery((client) =>
+          client.select().from(posts).where(eq(posts.id, id)).limit(1),
+        )
 
-        const post = posts.find((p) => p.id === id) ?? null
-        return post
+        return post ?? null
       }),
 
-    create: (title: string, content: string) =>
+    create: (data) =>
       Effect.gen(function* () {
-        const { db } = yield* DatabaseInfra
-        db.query('INSERT INTO posts (title, content) VALUES (?, ?)', [
-          title,
-          content,
-        ])
+        const { runQuery } = yield* DatabaseInfra
+        const [newPost] = yield* runQuery((client) =>
+          client.insert(posts).values(data).returning({ id: posts.id }),
+        )
 
-        const newPost: IPost = {
-          id: crypto.randomUUID(),
-          title,
-          content,
-        }
-        posts.push(newPost)
-        return newPost
+        return newPost?.id ?? null
       }),
 
-    update: (id: string, title: string, content: string) =>
+    update: (data) =>
       Effect.gen(function* () {
-        const { db } = yield* DatabaseInfra
-        db.query('UPDATE posts SET title = ?, content = ? WHERE id = ?', [
-          title,
-          content,
-          id,
-        ])
+        const { runQuery } = yield* DatabaseInfra
+        const [updatedPost] = yield* runQuery((client) =>
+          client
+            .update(posts)
+            .set({ title: data.title, content: data.content })
+            .where(eq(posts.id, data.id))
+            .returning({ id: posts.id }),
+        )
 
-        const postIndex = posts.findIndex((p) => p.id === id)
-        const updatedPost: IPost = {
-          id,
-          title,
-          content,
-        }
-        posts[postIndex] = updatedPost
-        return updatedPost
+        return updatedPost?.id ?? null
       }),
 
-    delete: (id: string) =>
+    delete: (id) =>
       Effect.gen(function* () {
-        const { db } = yield* DatabaseInfra
-        db.query('DELETE FROM posts WHERE id = ?', [id])
+        const { runQuery } = yield* DatabaseInfra
+        const [deletedPost] = yield* runQuery((client) =>
+          client
+            .delete(posts)
+            .where(eq(posts.id, id))
+            .returning({ id: posts.id }),
+        )
 
-        const postIndex = posts.findIndex((p) => p.id === id)
-        posts.splice(postIndex, 1)
-        return id
+        return deletedPost?.id ?? null
       }),
   }),
 )

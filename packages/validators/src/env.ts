@@ -33,4 +33,8 @@ export const env = createEnv({
 
   emptyStringAsUndefined: true,
   skipValidation: true,
+
+  deriveEnv: () => ({
+    DB: baseEnv.DB,
+  }),
 })
