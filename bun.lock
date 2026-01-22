@@ -61,20 +61,6 @@
         "elysia": "catalog:elysia",
       },
     },
-    "packages/api-core": {
-      "name": "@yukine/api-core",
-      "version": "0.0.1",
-      "dependencies": {
-        "elysia": "^1.4.22",
-        "reflect-metadata": "^0.2.2",
-      },
-      "devDependencies": {
-        "@types/node": "catalog:dev",
-        "@yukine/tsconfig": "workspace:*",
-        "tsdown": "catalog:dev",
-        "typescript": "catalog:dev",
-      },
-    },
     "packages/lib": {
       "name": "@yukine/lib",
       "version": "0.0.1",
@@ -724,8 +710,6 @@
 
     "@yukine/api": ["@yukine/api@workspace:apps/api"],
 
-    "@yukine/api-core": ["@yukine/api-core@workspace:packages/api-core"],
-
     "@yukine/github": ["@yukine/github@workspace:tools/github"],
 
     "@yukine/infra": ["@yukine/infra@workspace:tools/infra"],
@@ -1173,8 +1157,6 @@
     "readable-stream": ["readable-stream@2.3.8", "", { "dependencies": { "core-util-is": "~1.0.0", "inherits": "~2.0.3", "isarray": "~1.0.0", "process-nextick-args": "~2.0.0", "safe-buffer": "~5.1.1", "string_decoder": "~1.1.1", "util-deprecate": "~1.0.1" } }, "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA=="],
 
     "readdirp": ["readdirp@4.1.2", "", {}, "sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg=="],
-
-    "reflect-metadata": ["reflect-metadata@0.2.2", "", {}, "sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q=="],
 
     "reselect": ["reselect@5.1.1", "", {}, "sha512-K/BG6eIky/SBpzfHZv/dd+9JBFiS4SWV7FIujVyJRux6e45+73RaUHXLmIR1f7WOMaQ0U1km6qwklRQxpJJY0w=="],
 
