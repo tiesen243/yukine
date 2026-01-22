@@ -58,6 +58,9 @@
         "typescript": "catalog:dev",
         "vite": "npm:rolldown-vite@^7.3.1",
       },
+      "peerDependencies": {
+        "elysia": "^1.4.22",
+      },
     },
     "packages/api-core": {
       "name": "@yukine/api-core",
