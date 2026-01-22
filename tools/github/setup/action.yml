@@ -16,4 +16,4 @@ runs:
       run: bun ci
 
     - shell: bash
-      run: bun run build -F './packages/*'
+      run: bun run build
