@@ -1,12 +1,4 @@
-import type { ClassValue } from 'clsx'
-
 import { env } from '@yukine/validators/env.vite'
-import { clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
 
 export function getApiUrl() {
   if (import.meta.env.PROD) return env.VITE_API_URL

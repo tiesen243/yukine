@@ -12,8 +12,6 @@
   },
   "dependencies": {
     "@elysiajs/eden": "^1.4.6",
-    "@react-router/node": "^7.12.0",
-    "@react-router/serve": "^7.12.0",
     "@tanstack/react-query": "catalog:prod",
     "@yukine/api": "workspace:*",
     "@yukine/lib": "workspace:*",
@@ -27,6 +25,7 @@
   },
   "devDependencies": {
     "@react-router/dev": "^7.12.0",
+    "@react-router/serve": "^7.12.0",
     "@tailwindcss/vite": "catalog:tailwind",
     "@types/node": "catalog:dev",
     "@types/react": "catalog:react",
