@@ -1,3 +1,5 @@
+// oxlint-disable no-process-env
+
 import alchemy from 'alchemy'
 import { ReactRouter, Worker } from 'alchemy/cloudflare'
 import { config } from 'dotenv'
@@ -19,13 +21,16 @@ export const api = await Worker('api', {
   entrypoint: 'src/server.ts',
   compatibilityFlags: ['nodejs_compat', 'nodejs_compat_populate_process_env'],
   bindings: {
-    AUTH_SECRET: alchemy.env.AUTH_SECRET ?? '',
-    AUTH_DISCORD_ID: alchemy.env.AUTH_DISCORD_ID ?? '',
-    AUTH_DISCORD_SECRET: alchemy.env.AUTH_DISCORD_SECRET ?? '',
+    AUTH_SECRET: alchemy.secret(process.env.AUTH_SECRET),
+    AUTH_DISCORD_ID: alchemy.secret(process.env.AUTH_DISCORD_ID),
+    AUTH_DISCORD_SECRET: alchemy.secret(process.env.AUTH_DISCORD_SECRET),
 
-    CLIENT_ORIGINS: alchemy.env.CLIENT_ORIGINS ?? 'http://localhost:5173',
+    CORS_ORIGINS: alchemy.env.CORS_ORIGINS ?? '',
+    CORS_METHODS: alchemy.env.CORS_METHODS ?? '',
+    CORS_HEADERS: alchemy.env.CORS_HEADERS ?? '',
+    CORS_CREDENTIALS: alchemy.env.CORS_CREDENTIALS ?? '',
 
-    DATABASE_URL: alchemy.env.DATABASE_URL ?? '',
+    DATABASE_URL: alchemy.secret(process.env.DATABASE_URL),
   },
 })
 

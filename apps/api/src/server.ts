@@ -15,9 +15,10 @@ export default new Elysia({
 })
   .use(
     cors({
-      origin: env.CLIENT_ORIGINS,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      credentials: true,
+      origin: env.CORS_ORIGINS,
+      methods: env.CORS_METHODS,
+      allowedHeaders: env.CORS_HEADERS,
+      credentials: env.CORS_CREDENTIALS,
     }),
   )
   .use(openapi())

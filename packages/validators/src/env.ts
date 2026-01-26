@@ -24,9 +24,21 @@ export const env = createEnv({
     AUTH_DISCORD_ID: z.string(),
     AUTH_DISCORD_SECRET: z.string(),
 
-    CLIENT_ORIGINS: z.pipe(
+    CORS_ORIGINS: z.pipe(
       z._default(z.string(), 'http://localhost:5173'),
       z.transform((val) => val.split(',').map((s) => s.trim())),
+    ),
+    CORS_METHODS: z.pipe(
+      z._default(z.string(), 'GET,POST,PUT,DELETE,OPTIONS'),
+      z.transform((val) => val.split(',').map((s) => s.trim())),
+    ),
+    CORS_HEADERS: z.pipe(
+      z.string(),
+      z.transform((val) => val.split(',').map((s) => s.trim())),
+    ),
+    CORS_CREDENTIALS: z.pipe(
+      z._default(z.enum(['true', 'false']), 'true'),
+      z.transform((val) => val === 'true'),
     ),
 
     DATABASE_URL: z.string(),
