@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun run --env-file=../../.env react-router build",
+    "build": "bun run react-router build",
     "clean": "git clean -xdf .alchemy .cache .react-router .turbo .vercel build node_modules",
-    "dev": "bun run --env-file=../../.env react-router dev",
-    "start": "bun run --env-file=../../.env react-router-serve ./build/server/index.js",
+    "dev": "bun run react-router dev",
+    "start": "bun run react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc --noEmit"
   },
   "dependencies": {

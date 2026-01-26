@@ -20,10 +20,16 @@ export const env = createEnv({
   },
 
   server: {
+    AUTH_SECRET: z.string(),
+    AUTH_DISCORD_ID: z.string(),
+    AUTH_DISCORD_SECRET: z.string(),
+
     CLIENT_ORIGINS: z.pipe(
       z._default(z.string(), 'http://localhost:5173'),
       z.transform((val) => val.split(',').map((s) => s.trim())),
     ),
+
+    DATABASE_URL: z.string(),
   },
 
   clientPrefix: 'VITE_',
@@ -33,8 +39,4 @@ export const env = createEnv({
 
   emptyStringAsUndefined: true,
   skipValidation: true,
-
-  deriveEnv: () => ({
-    DB: baseEnv.DB,
-  }),
 })
