@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./auth": "./dist/auth.mjs",
     "./env": "./dist/env.mjs",
     "./env.vite": "./dist/env.vite.mjs",
-    "./post": "./dist/post.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -20,7 +20,7 @@
     "zod": "catalog:prod"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260124.0",
+    "@cloudflare/workers-types": "^4.20260203.0",
     "@types/node": "catalog:dev",
     "@yukine/infra": "workspace:*",
     "@yukine/tsconfig": "workspace:*",

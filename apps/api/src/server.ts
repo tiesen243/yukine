@@ -25,6 +25,7 @@ export default new Elysia({
   .use(timming({ ignorePatterns: [/^(?!\/api).*/] }))
   .use(httpException())
 
+  .get('/', ({ redirect }) => redirect('/api'))
   .use(homeController)
   .use(v1Controller)
 

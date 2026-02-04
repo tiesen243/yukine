@@ -20,14 +20,16 @@ export const homeController = controller({
         const dbStatus = yield* runQuery((client) =>
           client.execute('SELECT 1'),
         ).pipe(
-          Effect.as('ok'),
-          Effect.catchTag('DatabaseError', () => Effect.succeed('unavailable')),
+          Effect.as('connected'),
+          Effect.catchTag('DatabaseError', () =>
+            Effect.succeed('disconnected'),
+          ),
         )
 
         return {
           name: pkg.name,
           version: pkg.version,
-          status: 'ok',
+          status: 'healthy',
           database: { status: dbStatus },
           timestamp: new Date().toISOString(),
         }

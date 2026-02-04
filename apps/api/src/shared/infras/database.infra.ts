@@ -1,12 +1,7 @@
 import { env } from '@yukine/validators/env'
 import { drizzle } from 'drizzle-orm/postgres-js'
-import { Context, Data, Effect, Layer } from 'effect'
+import { Context, Effect, Layer } from 'effect'
 import postgres from 'postgres'
-
-export class DatabaseError extends Data.TaggedError('DatabaseError') {
-  override message: string = 'A database error occurred'
-  override cause = 500
-}
 
 const createDrizzleClient = () => {
   const conn = postgres(env.DATABASE_URL)
@@ -25,11 +20,11 @@ export class DatabaseInfra extends Context.Tag('@yukine/database-infra')<
     db: ReturnType<typeof createDrizzleClient>
     runQuery: <T>(
       fn: (client: ReturnType<typeof createDrizzleClient>) => Promise<T>,
-    ) => Effect.Effect<T, DatabaseError, DatabaseInfra>
+    ) => Effect.Effect<T, Error, DatabaseInfra>
   }
 >() {}
 
-export const DatabaseInfraLive = Layer.succeed(
+export const databaseInfra = Layer.succeed(
   DatabaseInfra,
   DatabaseInfra.of({
     db,
@@ -38,7 +33,7 @@ export const DatabaseInfraLive = Layer.succeed(
     ) =>
       Effect.tryPromise({
         try: () => fn(db),
-        catch: () => new DatabaseError(),
+        catch: () => new Error('Database operation failed', { cause: 500 }),
       }),
   }),
 )
